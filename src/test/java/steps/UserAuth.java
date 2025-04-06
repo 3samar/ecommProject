@@ -2,6 +2,8 @@ package steps;
 
 import POM.LoginPage;
 import core.DriverManager;
+import core.constants.Common;
+import core.utils.ExcelUtils;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -32,8 +34,8 @@ public class UserAuth {
     }
 
     @Then("the user should see the phone number in message")
-    public void verifySuccessMessage(DataTable dataTable) {
-        String expectedMessage = dataTable.column(0).get(1)+"";
+    public void verifySuccessMessage() {
+        String expectedMessage = ExcelUtils.getCellData(Common.EXCEL_PATH, "testData", 1, 1);
         String actualMessage = loginPage.getTextOfRegistrationSuccessMessage();
         assert actualMessage.contains(expectedMessage) : "Expected message: " + expectedMessage + ", but got: " + actualMessage;
     }
@@ -56,7 +58,7 @@ public class UserAuth {
 
     @Then("an error message should be displayed")
     public void verifyErrorMessage() {
-        String expectedMessage = "The user name and password provided do not correspond to any account at Zara.com.";
+        String expectedMessage = ExcelUtils.getCellData(Common.EXCEL_PATH, "testData", 2, 1);
         String actualMessage = loginPage.getErrorMessage();
         assert actualMessage.equals(expectedMessage) : "Expected message: " + expectedMessage + ", but got: " + actualMessage;
     }

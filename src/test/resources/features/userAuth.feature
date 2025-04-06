@@ -1,22 +1,21 @@
 Feature: User Authentication Scenarios
 #@demo
-#  Scenario: Successful registration with valid details
-#    Given the user is on the registration page
-#    When the user enters valid registration details
-#      | email         | test@email.com  |
-#      | password      | 12345678@Ajc    |
-#      | firstName     | Joe             |
-#      |phone.number   | 9999999999      |
-#    Then the user should see the phone number in message
-#    |PHONE_NUMBER |
-#    |9999999999   |
+  @TC01
+  Scenario: Successful registration with valid details
+    Given the user is on the registration page
+    When the user enters valid registration details
+      | email         | test@email.com  |
+      | password      | 12345678@Ajc    |
+      | firstName     | Joe             |
+      |phone.number   | 9999999999      |
+    Then the user should see the phone number in message
 #
 #  Scenario: Successful login with valid credentials
 #    Given the user is on the login page
 #    When the user enters valid credentials
 #    Then the user should be redirected to the dashboard
 #
-
+  @TC02
   Scenario: Unsuccessful login with invalid credentials
     Given the user is on the login page
     When the user enters invalid credentials

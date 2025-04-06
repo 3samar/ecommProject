@@ -52,7 +52,7 @@ public class ProductPage {
             WebElement productLink = DriverManager.getDriver().findElement(By.xpath("(//div[@class='product-grid-product-info__main-info'])[" + (i + 1) + "]"));
             String productName = productLink.getText();
             System.out.println("Product Name: " + productName);
-            assert productName.contains(searchedValue);
+            assert productName.contains(searchedValue): "Expected message: " + searchedValue + ", but got: " + productName;
         }
     }
 

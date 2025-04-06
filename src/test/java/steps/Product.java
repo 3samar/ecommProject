@@ -2,6 +2,8 @@ package steps;
 
 import POM.ProductPage;
 import core.DriverManager;
+import core.constants.Common;
+import core.utils.ExcelUtils;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -26,10 +28,9 @@ ProductPage productPage= new ProductPage(DriverManager.getDriver());
 
     }
     @Then("the user should see relevant products in the search results")
-    public void verifyProductLinks(DataTable dataTable) throws InterruptedException {
-        Map<String, String> formData = dataTable.asMap();
-        for (Map.Entry<String, String> entry : formData.entrySet()) {
-            productPage.verifyProductLinks(entry.getValue());
-        }
+    public void verifyProductLinks() throws InterruptedException {
+        String formData = ExcelUtils.getCellData(Common.EXCEL_PATH, "testData", 3, 1);
+            productPage.verifyProductLinks(formData);
+
     }
 }
