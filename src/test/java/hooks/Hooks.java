@@ -1,12 +1,13 @@
 package hooks;
-
+import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import io.cucumber.java.*;
+import core.utils.ExtentReportManager;
 import core.DriverManager;
 import core.constants.Common;
 import io.cucumber.java.After;
-import io.cucumber.java.AfterAll;
 import io.cucumber.java.Before;
-import io.cucumber.java.BeforeAll;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
@@ -14,8 +15,15 @@ import java.util.concurrent.TimeUnit;
 
 public class Hooks {
     public static WebDriver driver;
+    static ExtentReports extent = ExtentReportManager.getReportInstance();
+    static ThreadLocal<ExtentTest> test = new ThreadLocal<>();
+    public static ExtentTest getTest() {
+        return test.get();
+    }
     @Before
-    public void setup() {
+    public void setup(Scenario scenario) {
+        ExtentTest extentTest = extent.createTest(scenario.getName());
+        test.set(extentTest);
         System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver");
         driver= new ChromeDriver();
         DriverManager.setDriver(driver);
@@ -23,9 +31,19 @@ public class Hooks {
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.get(Common.URL);
     }
+    @AfterStep
+    public void afterStep(Scenario scenario) {
+        if (scenario.isFailed()) {
+            test.get().fail("Step failed: " + scenario.getName());
+        } else {
+            test.get().log(Status.PASS, "Step passed");
+        }
+    }
+
+
     @After
     public void cleanUp() {
-        // Close the WebDriver
+        extent.flush();
         WebDriver driver = DriverManager.getDriver();
         if (driver != null) {
             driver.quit();

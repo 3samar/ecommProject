@@ -45,10 +45,11 @@ public class ProductPage {
     }
 
     public void verifyProductLinks(String searchedValue) throws InterruptedException {
-        wait.until(ExpectedConditions.elementToBeClickable(DriverManager.getDriver().findElement(By.xpath("//ul[@class='product-grid__product-list']"))));
+        wait.until(ExpectedConditions.elementToBeClickable(DriverManager.getDriver().findElement(By.xpath("(//div[@class='product-grid-product-info__main-info'])[1]"))));
         Thread.sleep(3000);
 
-        for (WebElement productLink : productLinks) {
+        for (int i = 0; i < productLinks.size(); i++) {
+            WebElement productLink = DriverManager.getDriver().findElement(By.xpath("(//div[@class='product-grid-product-info__main-info'])[" + (i + 1) + "]"));
             String productName = productLink.getText();
             System.out.println("Product Name: " + productName);
             assert productName.contains(searchedValue);
