@@ -34,6 +34,42 @@ public class ProductsDetailsPage {
     private WebElement productTitle;
 
 
+    @FindBy(xpath = "//*[@data-qa-action='add-to-cart']")
+    private WebElement addToCartButton;
+
+    @FindBy(xpath = "//a[@data-qa-id='layout-header-go-to-cart']")
+    private WebElement goToCartButton;
+
+    @FindBy(xpath = "//span[@data-qa-qualifier='totals-total-amount']")
+    private WebElement cartTotalPrice;
+
+    @FindBy(xpath = "//button[@data-qa-id='shop-continue']")
+    private WebElement continueShoppingButton;
+
+    @FindBy(xpath = "//*[@data-qa-id='guest-continue-link']")
+    private WebElement continueAsAGuestButton;
+
+    public void clickOnContinueAsAGuestButton() {
+        wait.until(ExpectedConditions.elementToBeClickable(continueAsAGuestButton));
+        continueAsAGuestButton.click();
+    }
+
+    public void clickOnContinueShoppingButton() {
+        continueShoppingButton.click();
+    }
+
+    public String getCartTotalPrice() {
+        return cartTotalPrice.getText();
+    }
+
+    public void clickOnGoToCartButton() {
+        goToCartButton.click();
+    }
+
+    public void clickOnAddToCartButton() {
+        addToCartButton.click();
+    }
+
     public String getProductDetails(String fieldName) {
         if (fieldName.equals("productTitle"))  return productTitle.getText();
         else if (fieldName.equals("productPrice")) return productPrice.getText();
