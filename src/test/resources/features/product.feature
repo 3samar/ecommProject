@@ -1,5 +1,5 @@
 Feature: Product Search & Filter Scenarios
-  @demo
+#  @demo
     @TC03
     Scenario: Successful product search with valid keyword
         Given the user is on the product search page

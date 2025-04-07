@@ -10,6 +10,7 @@ import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.util.concurrent.TimeUnit;
 
@@ -24,6 +25,13 @@ public class Hooks {
     public void setup(Scenario scenario) {
         ExtentTest extentTest = extent.createTest(scenario.getName());
         test.set(extentTest);
+//        ChromeOptions options = new ChromeOptions();
+//        options.addArguments("--headless=new");
+//        options.addArguments("--window-size=1920,1080");
+//        options.addArguments("--disable-gpu");
+//        options.addArguments("--no-sandbox");
+//
+//        driver = new ChromeDriver(options);
         System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver");
         driver= new ChromeDriver();
         DriverManager.setDriver(driver);
